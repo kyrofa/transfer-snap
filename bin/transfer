@@ -1,0 +1,5 @@
+#!/bin/sh
+
+file="$( basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g' )"
+
+curl --progress-bar --upload-file "$1" "https://transfer.sh/$file"

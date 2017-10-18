@@ -1,0 +1,21 @@
+name: transfer
+version: '0.1'
+summary: Transfer files using transfer.sh
+description: |
+  Simply run:
+
+      $ transfer path/to/file
+      https://transfer.sh/pQ0mG/file
+
+grade: stable
+confinement: strict
+
+apps:
+  transfer:
+    command: transfer
+    plugs: [network, home, removable-media]
+
+parts:
+  scripts:
+    plugin: dump
+    stage-packages: [curl]
