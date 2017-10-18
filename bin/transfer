@@ -1,5 +1,22 @@
 #!/bin/sh
 
-file="$( basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g' )"
+if [ $# -eq 0 ]; then
+	echo "Missing file parameter." >&2
+	echo "Example usages:" >&2
+	echo "\ttransfer path/to/file" >&2
+	echo "\tcat path/to/file | transfer file" >&2
 
-curl --progress-bar --upload-file "$1" "https://transfer.sh/$file"
+	exit 1
+fi
+
+tmpfile=$( mktemp -t transferXXX )
+trap 'rm -f $tmpfile' EXIT
+
+basefile=$(basename "$1" | sed -e 's/[^a-zA-Z0-9._-]/-/g')
+file="$1"
+if ! tty -s; then
+	file="-"
+fi
+curl --progress-bar --upload-file "$file" "https://transfer.sh/$basefile" >> $tmpfile
+
+cat $tmpfile
