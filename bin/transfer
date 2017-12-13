@@ -20,3 +20,4 @@ fi
 curl --progress-bar --upload-file "$file" "https://transfer.sh/$basefile" >> $tmpfile
 
 cat $tmpfile
+echo ""
