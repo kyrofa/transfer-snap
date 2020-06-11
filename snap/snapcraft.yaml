@@ -9,6 +9,7 @@ description: |
 
 grade: stable
 confinement: strict
+base: core
 
 apps:
   transfer:
@@ -18,4 +19,5 @@ apps:
 parts:
   scripts:
     plugin: dump
+    source: .
     stage-packages: [curl]
